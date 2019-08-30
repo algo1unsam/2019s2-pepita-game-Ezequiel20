@@ -2,7 +2,8 @@ import pepita.*
 import ciudades.*
 import comidas.*
 import wollok.game.*
-
+import roque.*
+import elegirJugador.*
 program PepitaGame {
 	
 //	CONFIG	
@@ -10,24 +11,28 @@ program PepitaGame {
 	game.height(10)
 	game.width(10)
 	game.ground("suelo.png")
-
+	
 //	VISUALES
-	game.addVisualIn(alpiste, game.at(5,5))
-	game.addVisualIn(manzana, game.at(5,1))
+	game.addVisualIn(alpiste, alpiste.position())
+	game.addVisualIn(manzana, manzana.position())
 	game.addVisual(buenosAires)
 	game.addVisual(villaGesell)
 	game.addVisual(pepita)
+	game.addVisual(roque)
+	game.whenCollideDo(roque,{unaCosa => unaCosa.encontreAlgo(roque)})
+	game.whenCollideDo(pepita,{unaCosa => unaCosa.teEncontre(pepita)})
 
 //	TECLADO
 	keyboard.h().onPressDo { game.say(pepita, "Hola chiques!") }
+	keyboard.v().onPressDo { pepita.volaHaciaCondicional(villaGesell) }
+	keyboard.b().onPressDo { pepita.volaHaciaCondicional(buenosAires) }
 
-	keyboard.v().onPressDo { pepita.volaHacia(villaGesell) }
-	keyboard.b().onPressDo { pepita.volaHacia(buenosAires) }
-
-	keyboard.up().onPressDo { pepita.move(pepita.position().up(1)) }
-	keyboard.down().onPressDo { pepita.move(pepita.position().down(1)) }
-	keyboard.left().onPressDo { pepita.move(pepita.position().left(1)) }
-	keyboard.right().onPressDo { pepita.move(pepita.position().right(1)) }
+	keyboard.up().onPressDo {jugadores.miJugador().move(jugadores.miJugador().position().up(1)) }
+	keyboard.down().onPressDo { jugadores.miJugador().move(jugadores.miJugador().position().down(1)) }
+	keyboard.left().onPressDo { jugadores.miJugador().move(jugadores.miJugador().position().left(1)) }
+	keyboard.right().onPressDo { jugadores.miJugador().move(jugadores.miJugador().position().right(1)) }
+	keyboard.m().onPressDo{pepita.move(manzana.position())}
+	keyboard.a().onPressDo{pepita.move(alpiste.position())}
 		
 //	START
 	game.start()
