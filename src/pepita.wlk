@@ -5,7 +5,7 @@ import roque.*
 object pepita {
 	var property energia = 100
 	var property ciudad = null 
-	var property position = game.at(3,3)
+	var property position = game.at(3,2)
 	method image(){
 		if(energia>100){
 			return "pepita-gorda-raw.png"
@@ -46,9 +46,25 @@ object pepita {
 		energia -= self.energiaParaVolar(position.distance(nuevaPosicion))
 		self.position(nuevaPosicion)
 	}	
+	
 	method encontreAlgo(entrenador){
 	if(entrenador.comidaGuardada()!=null){
 	self.come(entrenador.comidaGuardada())
 	}	
+	
+	}
+	method meMuevoHaciaAlguien(alguien){
+		if(self.position().x() > alguien.position().x()){
+			self.move(self.position().left(1))
+		}
+		if(self.position().x() < alguien.position().x()){
+			self.move(self.position().right(1))	
+		}
+		if(self.position().y() > alguien.position().y()){
+			self.move(self.position().down(1))
+		}
+		if(self.position().y() < alguien.position().y()){
+			self.move(self.position().up(1))	
+		}
 	}
 }

@@ -11,6 +11,7 @@ program PepitaGame {
 	game.height(10)
 	game.width(10)
 	game.ground("suelo.png")
+	game.onTick(500,"pepita persiguiendo",{=>pepita.meMuevoHaciaAlguien(roque)})
 	
 //	VISUALES
 	game.addVisualIn(alpiste, alpiste.position())
